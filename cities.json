@@ -1,0 +1,11 @@
+ [{"city":"San Diego",       "state":"CA", "country":"US", "zip": 92101},
+  {"city":"Portland",        "state":"OR", "country":"US", "zip": 97201},
+  {"city":"Los Angeles",     "state":"CA", "country":"US", "zip": 90093},
+  {"city":"San Francisco",   "state":"CA", "country":"US", "zip": 94101},
+  {"city":"Seattle",         "state":"WA", "country":"US", "zip": 98101},
+  {"city":"Salt Lake City",  "state":"UT", "country":"US", "zip": 84111},
+  {"city":"Boise",           "state":"ID", "country":"US", "zip": 83701},
+  {"city":"Phoenix",         "state":"AZ", "country":"US", "zip": 85005},
+  {"city":"Butte",           "state":"MT", "country":"US", "zip": 59703},
+  {"city":"Colorado Springs","state":"CO", "country":"US", "zip": 80901},
+  {"city":"Santa Fe",        "state":"NM", "country":"US", "zip": 87501}]
