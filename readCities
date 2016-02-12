@@ -1,0 +1,294 @@
+package Json1;
+import org.quickconnectfamily.json.JSONException;
+import org.quickconnectfamily.json.JSONInputStream;
+import org.quickconnectfamily.json.JSONOutputStream;
+import org.quickconnectfamily.json.ParseException;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class readCities {
+
+    public static void main(String[] args) throws FileNotFoundException {
+
+        readFile();
+        System.out.println("-----------------------------------Read from non-existent file------------------------------------");
+        readImaginaryFile();
+        System.out.println("-----------------------Read from a file that I don't have read permissions to-----------------------");
+        notAllowedToRead();
+
+        writeFile();
+        System.out.println("------------------------Write to a file that does not exist-------------------------------------");
+        writeToImaginaryFile();
+        System.out.println("------------------------Write to a file I do not have Write permissions to-----------");
+        notAllowedToWrite();
+        System.out.println("------------------------Write null values to a file-----------------------------------");
+        writeNull();
+
+    }
+
+
+    // This method reads the data from a JSON file
+    public static void readFile() throws FileNotFoundException {
+
+        ArrayList<HashMap> majorCities = new ArrayList<HashMap>();
+
+        try {
+            FileInputStream fin = new FileInputStream("cities.json");
+
+            JSONInputStream jin = new JSONInputStream(fin);
+
+            majorCities = (ArrayList<HashMap>) jin.readObject();
+
+            System.out.println(majorCities.size());
+            System.out.println(majorCities.get(3));
+
+            //Figure out why these catch blocks are necessary
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        System.out.println("-----------------------------Read from non existent index----------------------------------");
+
+        //nasty path -- Read from non existent index
+        try {
+            System.out.println(majorCities.get(100));
+        }catch(IndexOutOfBoundsException e){
+            System.out.println("Index does not exist");
+        }
+
+        System.out.println("---------------------------------Read from a text file----------------------------------");
+
+        //read from non json file
+        ArrayList<HashMap> names = new ArrayList<HashMap>();
+
+        try {
+            FileInputStream fin = new FileInputStream("names.txt");
+
+            JSONInputStream jin = new JSONInputStream(fin);
+
+            names = (ArrayList<HashMap>) jin.readObject();
+
+            System.out.println(names.size());
+            System.out.println(names.get(1));
+
+            //Figure out why these catch blocks are necessary
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        // Read from an empty file
+
+        System.out.println("-----------------------------------Read from an empty file--------------------------------------------");
+
+        ArrayList<HashMap> empty = new ArrayList<HashMap>();
+
+        try {
+            FileInputStream fin = new FileInputStream("empty.json");
+
+            JSONInputStream jin = new JSONInputStream(fin);
+
+            empty = (ArrayList<HashMap>) jin.readObject();
+
+            System.out.println(empty);
+
+            //Figure out why these catch blocks are necessary
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+    //read from file that does not exist
+    public static void readImaginaryFile() throws FileNotFoundException {
+
+
+        ArrayList<HashMap> doesnotexist = new ArrayList<HashMap>();
+
+        try {
+            FileInputStream fin = new FileInputStream("doesnotexist.txt");
+
+            JSONInputStream jin = new JSONInputStream(fin);
+
+            doesnotexist = (ArrayList<HashMap>) jin.readObject();
+
+            System.out.println(doesnotexist);
+
+            //Figure out why these catch blocks are necessary
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    //read from file that you dont have read permissions
+    public static void notAllowedToRead() throws FileNotFoundException {
+
+
+        ArrayList<HashMap> newCity = new ArrayList<HashMap>();
+
+        try {
+            FileInputStream fin = new FileInputStream("newCities.json");
+
+            JSONInputStream jin = new JSONInputStream(fin);
+
+            newCity = (ArrayList<HashMap>) jin.readObject();
+
+            System.out.println(newCity);
+
+            //Figure out why these catch blocks are necessary
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+
+
+    // This method will write data to a JSON file
+   public static void writeFile() throws FileNotFoundException {
+
+        File newCities = new File("newCities.json");
+        FileOutputStream fileOut = new FileOutputStream(newCities);
+
+
+        JSONOutputStream jOut = new JSONOutputStream(fileOut);
+
+
+        cityBean sandy = new cityBean("Sandy", "UT", "US", 84090);
+        cityBean houston = new cityBean("Houston", "TX", "US", 77705);
+
+        try {
+            jOut.writeObject(sandy);
+            jOut.writeObject(houston);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+   }
+
+    //Write to a file that does not exist
+    public static void writeToImaginaryFile() throws FileNotFoundException {
+
+        File justCreated = new File("justCreated.txt");
+        FileOutputStream fileOut2 = new FileOutputStream(justCreated);
+
+
+        JSONOutputStream jOut = new JSONOutputStream(fileOut2);
+
+
+        cityBean rtown = new cityBean("Rtown", "UT", "US", 84091);
+        cityBean btown = new cityBean("Btown", "TX", "US", 77706);
+
+        try {
+            jOut.writeObject(rtown);
+            jOut.writeObject(btown);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
+    //Write to file that I do not have write permissions to
+    public static void notAllowedToWrite() throws FileNotFoundException {
+
+        File notAllowed = new File("newCities.json");
+        FileOutputStream fileOut3 = new FileOutputStream(notAllowed);
+
+
+        JSONOutputStream jOut = new JSONOutputStream(fileOut3);
+
+
+        cityBean neverland = new cityBean("Neverland", "UT", "US", 84020);
+
+        try {
+            jOut.writeObject(neverland);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+
+    }
+
+
+    //Try to write a null value to a file and call it twice
+    public static void writeNull() throws FileNotFoundException {
+
+        File writeNull = new File("null.json");
+        FileOutputStream fileOut4 = new FileOutputStream(writeNull);
+
+
+        JSONOutputStream jOut = new JSONOutputStream(fileOut4);
+
+
+        cityBean nunya = new cityBean(null, null, null, 0);
+
+        try {
+            jOut.writeObject(nunya);
+            jOut.writeObject(nunya);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+    }
+}
+
+
+
+
+//call write object twice to the same file
